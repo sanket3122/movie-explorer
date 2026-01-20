@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie Explorer
 
-## Getting Started
+**Hosted App:** https://movie-explorer-six-zeta.vercel.app
 
-First, run the development server:
+Movie Explorer lets users search movies, open a details view, and save favorites with a personal rating (1–5) and optional note. Movie data is fetched from TMDB through server-side Next.js proxy routes (so the API key stays hidden). Favorites are persisted in LocalStorage so they survive refresh.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+## Core Features
+
+- **Search** by movie title (poster, title, year/release date, short description)
+- **Details** view (modal) with poster, overview, year, runtime (if available)
+- **Favorites** add/remove + rating (1–5) + optional note
+- **Persistence** via LocalStorage (survives refresh)
+- **API Proxy** via Next.js route handlers (TMDB key not exposed)
+- **Error handling** for no results, invalid inputs, and API/network issues
+
+---
+
+## Architecture
+
+
+```mermaid
+flowchart LR
+  UI[Next.js UI] --> S[Search Proxy]
+  UI --> D[Details Proxy]
+  UI --> LS[(LocalStorage)]
+
+  S --> TMDB[(TMDB API)]
+  D --> TMDB
 ```
+---
+## Technical Decisions & Tradeoffs
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### API proxy (TMDB key stays server-side)
+- I used Next.js Route Handlers under `app/api/tmdb/*` as a thin proxy to TMDB.
+- This keeps the TMDB API key on the server (`TMDB_API_KEY` in `.env.local`) and avoids exposing it in the browser.
+- Tradeoff: adds one extra hop (UI → Next API → TMDB), but security + interview discussion value is worth it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### State management (simple hook, no heavy libs)
+- Favorites are managed with a custom hook `useFavorites()` and React state.
+- I avoided Redux/Zustand since the app is small and the requirements focus on a working prototype.
+- Tradeoff: not ideal for huge apps, but clean and easy to reason about for this scope.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Persistence choice (LocalStorage baseline)
+- Favorites persist via LocalStorage so they survive refresh and require no DB setup.
+- Tradeoff: data is per-browser and not shareable across devices/users.
+- Optional future: add server persistence with an API + DB (see “Improvements”).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Technical Requirements Checklist
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- ✅ Next.js App Router + React
+- ✅ TypeScript used across UI and API code
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Backend
+- ✅ Next.js Route Handlers proxy TMDB:
+  - `GET /api/tmdb/search`
+  - `GET /api/tmdb/movie/[id]`
+- ⏳ Optional server-side persistence not implemented (kept scope small)
 
-## Deploy on Vercel
+### Data
+- ✅ LocalStorage used for favorites persistence (baseline requirement)
+- ⏳ Optional DB not added (would be next step)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Hosting
+- ✅ Deployed on Vercel with a public URL (full app accessible)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Known Limitations
+
+- Favorites are client-only (LocalStorage), not synced across devices.
+- No authentication, so favorites are not tied to a user account.
+- Basic rate-limit handling; TMDB limits could be hit with heavy usage.
+- Search UX is simple (no pagination/infinite scroll, no advanced filters).
+- Minimal accessibility polish (keyboard focus states could be improved more).
+
+---
+
+## What I’d Improve With More Time
+
+- Add server-side persistence:
+  - API routes: `POST/GET/DELETE /api/favorites`
+  - DB: SQLite/Postgres via Prisma
+  - Optional auth (NextAuth) to tie favorites to users
+- Add pagination + debounced search, reduce TMDB calls.
+- Add better empty/error UI states and skeleton loading.
+- Add automated tests (unit tests for hook + API routes).
+- Improve accessibility: focus trap in modal, ARIA labels, keyboard navigation.
+
+
+
+
