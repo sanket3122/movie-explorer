@@ -9,9 +9,9 @@ Movie Explorer lets users search movies, open a details view, and save favorites
 ## ✨ Core Features
 
 - **Search** by movie title (poster, title, year/release date, short description)
-- **Details** view (modal) with poster, overview, year, runtime (if available)
+- **Details** view (modal) with poster, overview, year, runtime
 - **Favorites** add/remove + rating (1–5) + optional note
-- **Persistence** via LocalStorage (survives refresh)
+- **Persistence** via LocalStorage
 - **API Proxy** via Next.js route handlers (TMDB key not exposed)
 - **Error handling** for no results, invalid inputs, and API/network issues
 
@@ -58,7 +58,7 @@ flowchart LR
 ### 🛡️ API proxy (TMDB key stays server-side)
 - I used Next.js Route Handlers under `app/api/tmdb/*` as a thin proxy to TMDB.
 - This keeps the TMDB API key on the server (`TMDB_API_KEY` in `.env.local`) and avoids exposing it in the browser.
-- Tradeoff: adds one extra hop (UI → Next API → TMDB), but security + interview discussion value is worth it.
+- Tradeoff: adds one extra hop (UI → Next API → TMDB).
 
 ### 🧩 State management (simple hook, no heavy libs)
 - Favorites are managed with a custom hook `useFavorites()` and React state.
@@ -68,7 +68,7 @@ flowchart LR
 ### 💾 Persistence choice (LocalStorage baseline)
 - Favorites persist via LocalStorage so they survive refresh and require no DB setup.
 - Tradeoff: data is per-browser and not shareable across devices/users.
-- Optional future: add server persistence with an API + DB (see “Improvements”).
+- Optional future: add server persistence with an API + DB.
 
 ---
 
@@ -85,7 +85,7 @@ flowchart LR
 - ⏳ Optional server-side persistence not implemented (kept scope small)
 
 ### 🗃️ Data
-- ✅ LocalStorage used for favorites persistence (baseline requirement)
+- ✅ LocalStorage used for favorites persistence
 - ⏳ Optional DB not added (would be next step)
 
 ### 🌍 Hosting
@@ -97,8 +97,7 @@ flowchart LR
 
 - Favorites are client-only (LocalStorage), not synced across devices.
 - No authentication, so favorites are not tied to a user account.
-- Basic rate-limit handling; TMDB limits could be hit with heavy usage.
-- Search UX is simple (no pagination/infinite scroll, no advanced filters).
+- Search UX is simple (infinite scroll, no advanced filters).
 - Minimal accessibility polish (keyboard focus states could be improved more).
 
 ---
@@ -107,11 +106,10 @@ flowchart LR
 
 - Add server-side persistence:
   - API routes: `POST/GET/DELETE /api/favorites`
-  - DB: SQLite/Postgres via Prisma
+  - DB: MongoDB/Postgres for authentication + to save favorites.
   - Optional auth (NextAuth) to tie favorites to users
 - Add pagination + debounced search, reduce TMDB calls.
 - Add better empty/error UI states and skeleton loading.
-- Add automated tests (unit tests for hook + API routes).
 - Improve accessibility: focus trap in modal, ARIA labels, keyboard navigation.
 
 
