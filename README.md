@@ -42,7 +42,7 @@ Open: http://localhost:3000
 ---
 
 ## 🧩 Architecture
-flowchart LR
+
 ```mermaid
 flowchart LR
   UI[Next.js UI] --> S[Search Proxy]
