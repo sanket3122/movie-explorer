@@ -6,7 +6,7 @@ Movie Explorer lets users search movies, open a details view, and save favorites
 
 ---
 
-## ✨ Core Features
+## ✨ Core Features 
 
 - **Search** by movie title (poster, title, year/release date, short description)
 - **Details** view (modal) with poster, overview, year, runtime
