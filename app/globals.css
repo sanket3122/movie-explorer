@@ -1,0 +1,415 @@
+:root {
+  /* theme vars */
+  --bg: #0b1220;
+  --text: rgba(255, 255, 255, .92);
+  --muted: rgba(255, 255, 255, .7);
+  --panel: rgba(255, 255, 255, .06);
+  --panel2: rgba(255, 255, 255, .08);
+  --border: rgba(255, 255, 255, .12);
+  --accent: #7c3aed;
+  --shadow: 0 14px 40px rgba(0, 0, 0, .35);
+  --r: 16px;
+  --g: 14px;
+}
+
+* {
+  box-sizing: border-box
+}
+
+/* box model */
+body {
+  /* page bg */
+  margin: 0;
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(900px 500px at 10% 0%, rgba(0, 0, 0, 0.22), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(0, 0, 0, 0.14), transparent 60%),
+    linear-gradient(180deg, #070b14, var(--bg));
+}
+
+a {
+  color: inherit;
+  text-decoration: none
+}
+
+/* links */
+a:hover {
+  text-decoration: underline;
+  opacity: .92
+}
+
+/* link hover */
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  color: var(--text)
+}
+
+/* form text */
+input,
+textarea,
+select {
+  /* inputs */
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  /* focus ring */
+  outline: none;
+  border-color: rgba(124, 58, 237, .75);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, .18);
+}
+
+button {
+  /* buttons */
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform .12s ease, background .15s ease, border-color .15s ease;
+}
+
+button:hover {
+  background: var(--panel2);
+  border-color: rgba(255, 255, 255, .16)
+}
+
+/* btn hover */
+button:active {
+  transform: translateY(1px)
+}
+
+/* btn press */
+button:disabled {
+  opacity: .55;
+  cursor: not-allowed
+}
+
+/* btn disabled */
+
+.card {
+  /* card base */
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .05) inset;
+  backdrop-filter: blur(10px);
+}
+
+.muted {
+  color: var(--muted)
+}
+
+/* muted text */
+.soft {
+  background: var(--panel)
+}
+
+/* soft bg */
+.mt10 {
+  margin-top: 10px
+}
+
+/* spacing */
+.mt12 {
+  margin-top: 12px
+}
+
+/* spacing */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px
+}
+
+/* page wrapper */
+.pageTitle {
+  margin: 6px 0 12px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 900
+}
+
+/* page title */
+
+.searchRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0 8px
+}
+
+/* search row */
+.searchInput {
+  flex: 1;
+  min-width: 0
+}
+
+/* search input */
+
+.mainGrid {
+  display: grid;
+  gap: 16px;
+  margin-top: 14px;
+  align-items: start
+}
+
+/* main layout */
+.resultsCol {
+  display: grid;
+  gap: 12px
+}
+
+/* results list */
+.favPanel {
+  position: sticky;
+  top: 16px;
+  padding: 14px
+}
+
+/* favorites panel */
+.favTitle {
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 8px;
+  text-align: center
+}
+
+/* favorites title */
+.favList {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px
+}
+
+/* favorites list */
+
+.movieCard {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background-color: rgb(17, 27, 34);
+}
+
+/* movie card */
+.moviePoster {
+  width: 92px;
+  flex-shrink: 0
+}
+
+/* movie poster */
+.movieInfo {
+  flex: 1;
+  min-width: 0
+}
+
+/* movie info */
+.movieTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start
+}
+
+/* card header */
+.movieTitle {
+  font-weight: 900
+}
+
+/* title text */
+.movieYear {
+  font-size: 12px;
+  margin-top: 2px
+}
+
+/* year text */
+.movieOverview {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.45
+}
+
+/* overview text */
+.detailsBtn {
+  margin-top: 10px
+}
+
+/* details btn */
+
+.imgRounded {
+  width: 100%;
+  border-radius: 14px;
+  display: block
+}
+
+/* rounded img */
+.posterFallback,
+.posterFallbackSmall {
+  display: grid;
+  place-items: center;
+  background: var(--panel);
+  border-radius: 14px
+}
+
+/* no poster */
+.posterFallback {
+  height: 330px
+}
+
+/* big fallback */
+.posterFallbackSmall {
+  height: 70px
+}
+
+/* small fallback */
+
+.favItem {
+  padding: 12px;
+  background-color: rgb(17, 27, 34);
+}
+
+/* fav card */
+.favRow {
+  display: flex;
+  gap: 12px
+}
+
+/* fav row */
+.favPoster {
+  width: 52px;
+  flex-shrink: 0
+}
+
+/* fav poster */
+.favMovieTitle {
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.2
+}
+
+/* fav title */
+.favControls {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  align-items: center
+}
+
+/* fav controls */
+.favLabel {
+  font-size: 12px;
+}
+
+/* fav label */
+.btnSmall {
+  margin-left: auto;
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 12px
+}
+
+/* small btn */
+.favNote {
+  width: 100%;
+  margin-top: 10px;
+  min-height: 64px
+}
+
+/* note box */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .65);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 50;
+}
+
+/* modal overlay */
+
+.modalCard {
+  width: min(900px, 100%);
+  /* background:linear-gradient(180deg,var(--panel2),var(--panel)); */
+  background-color: #091929;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+}
+
+/* modal card */
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+/* modal header */
+
+.modalTitle {
+  font-weight: 900;
+  font-size: 18px
+}
+
+/* modal title */
+.modalActions {
+  display: flex;
+  gap: 10px
+}
+
+/* modal actions */
+
+.modalBody {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+  align-items: flex-start;
+}
+
+/* modal body */
+
+.modalPoster {
+  width: 240px;
+  flex-shrink: 0
+}
+
+/* modal poster */
+.modalContent {
+  flex: 1;
+  min-width: 0
+}
+
+/* modal content */
+
+.metaRow {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--muted)
+}
+
+/* meta row */
+.modalOverview {
+  margin-top: 10px;
+  line-height: 1.55
+}
+
+/* overview text */
