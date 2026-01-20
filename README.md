@@ -1,11 +1,12 @@
-# Movie Explorer
+# 🎬 Movie Explorer
 
-**Hosted App:** https://movie-explorer-six-zeta.vercel.app
+🌐 **Hosted App:** https://movie-explorer-six-zeta.vercel.app
 
 Movie Explorer lets users search movies, open a details view, and save favorites with a personal rating (1–5) and optional note. Movie data is fetched from TMDB through server-side Next.js proxy routes (so the API key stays hidden). Favorites are persisted in LocalStorage so they survive refresh.
 
 ---
-## Core Features
+
+## ✨ Core Features
 
 - **Search** by movie title (poster, title, year/release date, short description)
 - **Details** view (modal) with poster, overview, year, runtime (if available)
@@ -16,9 +17,32 @@ Movie Explorer lets users search movies, open a details view, and save favorites
 
 ---
 
-## Architecture
+##  🛠️ Setup & Run (Local)
 
+### Prereqs
+- Node.js 18+ (recommended)
+- TMDB API key
 
+### 1️⃣ Install
+```bash
+npm install
+```
+### 2️⃣ Configure env
+
+Create .env.local in the project root:
+```
+TMDB_API_KEY=your_tmdb_api_key_here
+```
+### 3️⃣ Run dev
+```
+npm run dev
+```
+Open: http://localhost:3000
+
+---
+
+## 🧩 Architecture
+flowchart LR
 ```mermaid
 flowchart LR
   UI[Next.js UI] --> S[Search Proxy]
@@ -29,47 +53,47 @@ flowchart LR
   D --> TMDB
 ```
 ---
-## Technical Decisions & Tradeoffs
+## 🧠 Technical Decisions & Tradeoffs
 
-### API proxy (TMDB key stays server-side)
+### 🛡️ API proxy (TMDB key stays server-side)
 - I used Next.js Route Handlers under `app/api/tmdb/*` as a thin proxy to TMDB.
 - This keeps the TMDB API key on the server (`TMDB_API_KEY` in `.env.local`) and avoids exposing it in the browser.
 - Tradeoff: adds one extra hop (UI → Next API → TMDB), but security + interview discussion value is worth it.
 
-### State management (simple hook, no heavy libs)
+### 🧩 State management (simple hook, no heavy libs)
 - Favorites are managed with a custom hook `useFavorites()` and React state.
 - I avoided Redux/Zustand since the app is small and the requirements focus on a working prototype.
 - Tradeoff: not ideal for huge apps, but clean and easy to reason about for this scope.
 
-### Persistence choice (LocalStorage baseline)
+### 💾 Persistence choice (LocalStorage baseline)
 - Favorites persist via LocalStorage so they survive refresh and require no DB setup.
 - Tradeoff: data is per-browser and not shareable across devices/users.
 - Optional future: add server persistence with an API + DB (see “Improvements”).
 
 ---
 
-## Technical Requirements Checklist
+## ✅ Technical Requirements Checklist
 
-### Frontend
+### 🎨 Frontend
 - ✅ Next.js App Router + React
 - ✅ TypeScript used across UI and API code
 
-### Backend
+### 🧰 Backend
 - ✅ Next.js Route Handlers proxy TMDB:
   - `GET /api/tmdb/search`
   - `GET /api/tmdb/movie/[id]`
 - ⏳ Optional server-side persistence not implemented (kept scope small)
 
-### Data
+### 🗃️ Data
 - ✅ LocalStorage used for favorites persistence (baseline requirement)
 - ⏳ Optional DB not added (would be next step)
 
-### Hosting
+### 🌍 Hosting
 - ✅ Deployed on Vercel with a public URL (full app accessible)
 
 ---
 
-## Known Limitations
+## ⚠️ Known Limitations
 
 - Favorites are client-only (LocalStorage), not synced across devices.
 - No authentication, so favorites are not tied to a user account.
@@ -79,7 +103,7 @@ flowchart LR
 
 ---
 
-## What I’d Improve With More Time
+## 🚀 What I’d Improve With More Time
 
 - Add server-side persistence:
   - API routes: `POST/GET/DELETE /api/favorites`
